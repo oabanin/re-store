@@ -1,3 +1,3 @@
-import WithBookstoreService from './withbookstore-service';
+import withBookstoreService from './withbookstore-service';
 
-export default WithBookstoreService;
+export { withBookstoreService };

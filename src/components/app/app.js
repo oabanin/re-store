@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Spinner from '../spinner';
+import { withBookstoreService } from '../hoc';
 
 
 
-const App = () => {
+const App = ({bookstoreService}) => {
+
+    console.log(bookstoreService.getBooks());
     const [data, setData] = useState({
         loading: false,
         data: null
@@ -12,11 +15,11 @@ const App = () => {
 
     if (!data.loading) {
         return (
-        <Spinner/>);
+            <Spinner />);
     }
 
 
     return (<p>Hello world</p>);
 }
 
-export default App;
+export default withBookstoreService()(App);
