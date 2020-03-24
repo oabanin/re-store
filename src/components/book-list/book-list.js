@@ -10,14 +10,13 @@ import './book-list.css';
 
 class BookList extends Component {
 
-  async componentDidMount() {
-    // 1. receive data
-    const { bookstoreService } = this.props;
-    const data = await bookstoreService.getBooks();
-    //console.log(data);
-    //data.then(data=>console.log(data))
-    // 2. dispacth action to store
-    this.props.booksLoaded(data);
+  componentDidMount() {
+    
+    const { bookstoreService, booksLoaded } = this.props;
+
+    bookstoreService.getBooks()         // 1. receive data
+      .then(data => booksLoaded(data))  // 2. dispacth action to store
+
   }
 
   render() {
@@ -27,7 +26,7 @@ class BookList extends Component {
         {
           books.map((book) => {
             return (
-              <li key={book.id}><BookListItem book={book}/></li>
+              <li key={book.id}><BookListItem book={book} /></li>
             )
           })
         }
