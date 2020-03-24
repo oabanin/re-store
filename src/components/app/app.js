@@ -1,43 +1,27 @@
-import React, { useState } from 'react';
-import {Link, Switch, Route} from 'react-router-dom';
-import Spinner from '../spinner';
-import {HomePage, CartPage} from '../pages';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import ShopHeader from '../shop-header';
+import { HomePage, CartPage } from '../pages';
 
+import './app.css';
 
+const App = () => {
+  return (
+    <main role="main" className="container">
+      <ShopHeader numItems={5} total={210}/>
+      <Switch>
+        <Route
+          path="/"
+          component={HomePage}
+          exact />
 
-const App = ({ bookstoreService }) => {
-
-
-    // const [data, setData] = useState({
-    //     loading: false,
-    //     data: null
-    // });
-
-
-    // if (!data.loading) {
-    //     return (
-    //         <Spinner />);
-    // }
-
-
-    return (
-        <div>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/cart">Cart</Link>
-                    </li>
-                </ul>
-            </nav>
-
-            <Switch>
-                <Route path="/cart" component={CartPage} />
-                <Route path="/" component={HomePage} exact/>
-            </Switch>
-        </div>);
-}
+        <Route
+          path="/cart"
+          component={CartPage}
+          />
+      </Switch>
+    </main>
+  );
+};
 
 export default App;
