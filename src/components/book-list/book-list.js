@@ -2,21 +2,27 @@ import React, { Component } from 'react';
 import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 
+
 import { withBookstoreService } from '../hoc';
+import { booksLoaded } from '../../actions';
+import { compose } from '../../utils';
+
 import './book-list.css';
 
 class BookList extends Component {
 
   componentDidMount() {
-    
+
     //0) get props and dispatchActionsFunc from redux
     const { bookstoreService, booksLoaded } = this.props;
 
     //1) get data from service
     const data = bookstoreService.getBooks();
-    
+
     //2 Dispatch action to store
     booksLoaded(data);
+
+
   }
 
   render() {
@@ -39,12 +45,13 @@ const mapStateToProps = ({ books }) => {
   return { books }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    booksLoaded: (newBooks) => {
-      dispatch({ type: 'BOOKS_LOADED', payload: newBooks })
-    }
-  }
+const mapDispatchToProps = {
+  booksLoaded
 }
 
-export default withBookstoreService()(connect(mapStateToProps, mapDispatchToProps)(BookList));
+
+export default compose(
+withBookstoreService(),
+connect(mapStateToProps, mapDispatchToProps)
+)(BookList)
+
