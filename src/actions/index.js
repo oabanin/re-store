@@ -5,10 +5,10 @@ const booksLoaded = (newBooks) => {
     }
 }
 
-const test = () => {
+const booksRequested = () => {
     return {
-        type: 'test'
+        type: 'BOOKS_REQUSTED'
     }
 }
 
-export { booksLoaded, test};
+export { booksLoaded, booksRequested};

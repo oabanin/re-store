@@ -5,6 +5,13 @@ const initialState = {
 
 const reducer = (state = initialState, action) =>  {
     switch(action.type){
+        
+        case 'BOOKS_REQUSTED':
+            return {
+                books : [],
+                loading: true
+            }
+        
         case 'BOOKS_LOADED':
             return {
                 books: action.payload,
