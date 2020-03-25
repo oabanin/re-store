@@ -20,7 +20,7 @@ export default class BookstoreService {
   getBooks() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.7) {
           reject(new Error("Error BAD"))
         }
         else {
