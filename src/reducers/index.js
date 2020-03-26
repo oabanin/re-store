@@ -32,10 +32,10 @@ const reducer = (state = initialState, action) => {
                 error: action.payload
             }
 
-        case 'BOOK_ADDED_TO_CART': 
+        case 'BOOK_ADDED_TO_CART':
             const bookId = action.payload;
-            const book = state.books.find((book)=> book.id === bookId);
-            const newItem =  {
+            const book = state.books.find((book) => book.id === bookId);
+            const newItem = {
                 id: book.id,
                 name: book.title,
                 count: 1,
