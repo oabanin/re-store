@@ -33,17 +33,19 @@ export const bookAddedToCart = (bookId) => {
     }
 }
 
-export const deleteAllBooks = (bookId) => {
+export const bookRemovedFromCart = (bookId) => {
     return {
-        type: 'BOOK_DELETE',
+        type: 'BOOK_REMOVED_FROM_CART',
         payload: bookId
     }
 }
 
-export const deleteOneBook = (bookId) => {
+export const allBooksRemovedFromCart = (bookId) => {
     return {
-        type: 'ONE_BOOK_DELETE',
+        type: 'ALL_BOOKS_REMOVED_FROM_CART',
         payload: bookId
     }
 }
+
+
 
