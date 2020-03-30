@@ -1,9 +1,13 @@
 const initialState = {
-    books: [],
-    loading: true,
-    error: null,
-    cartItems: [],
-    orderTotal: 100
+    bookList: {
+        books: [],
+        loading: true,
+        error: null
+    },
+    shoppingCart: {
+        cartItems: [],
+        orderTotal: 100
+    }
 }
 
 const updateOrder = (state, bookId, quantity) => {
@@ -54,8 +58,8 @@ const updateCartItem = (book, item = {}, quantity) => {
     }
 }
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
+const updateBookList = (state, action) => {
+     switch(action.type){
         case 'FETCH_BOOKS_REQUEST':
             return {
                 ...state,
@@ -79,6 +83,16 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: action.payload
             }
+     }
+}
+
+const updateShoppingCart = (state, action) => {
+     
+}
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+       
 
         case 'BOOK_ADDED_TO_CART':
             return updateOrder(state, action.payload, 1);
