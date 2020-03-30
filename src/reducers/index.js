@@ -22,6 +22,15 @@ const updateCartItems = (cartItems, item, idx) => {
     ]
 }
 
+
+
+const deleteCartItems = (cartItems, idx) => {
+    return [
+        ...cartItems.splice(idx, 1)
+    ]
+}
+
+
 const updateCartItem = (book, item = {}) => {
 
     const { id = book.id, title = book.title, count = 0, total = 0 } = item;
@@ -60,9 +69,10 @@ const reducer = (state = initialState, action) => {
             }
 
         case 'BOOK_ADDED_TO_CART':
-            const bookId = action.payload;
+
+            let bookId = action.payload;
             const book = state.books.find((book) => book.id === bookId);
-            const itemIndex = state.cartItems.findIndex(({ id }) => id === bookId);
+            let itemIndex = state.cartItems.findIndex(({ id }) => id === bookId);
             const item = state.cartItems[itemIndex];
             const newItem = updateCartItem(book, item);
 
@@ -71,6 +81,21 @@ const reducer = (state = initialState, action) => {
                 cartItems: updateCartItems(state.cartItems, newItem, itemIndex)
             }
 
+        case 'BOOK_DELETE':
+
+            const bookId2 = action.payload;
+            //const book = state.books.find((book) => book.id === bookId);
+            const itemIndex2 = state.cartItems.findIndex(({ id }) => id === bookId2);
+            //console.log(`bookIDinSErvice - ${bookId2}, indexinCartArray - ${itemIndex2}`);
+            const item2 = state.cartItems[itemIndex2];
+            console.log(item2);
+            console.log(itemIndex2);
+            console.log(state.cartItems)
+            return state;
+            return {
+                ...state,
+                cartItems: deleteCartItems(state.cartItems, itemIndex2)
+            }
 
         default:
             return state;
