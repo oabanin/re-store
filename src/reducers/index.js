@@ -22,12 +22,27 @@ const updateCartItems = (cartItems, item, idx) => {
     ]
 }
 
+const decreaseOneBookInCartItem = (cartItems, item, idx) => {
+
+    if (item.count < 1) {
+        return [
+            ...cartItems.slice(0, idx),
+            ...cartItems.slice(idx + 1)
+        ]
+    }
+
+    return [
+        ...cartItems.slice(0, idx),
+        item,
+        ...cartItems.slice(idx + 1)
+    ]
+}
+
+
 
 
 const deleteCartItems = (cartItems, idx) => {
-    return [
-        ...cartItems.splice(idx, 1)
-    ]
+    return [...cartItems].splice(idx, 1)
 }
 
 
@@ -41,6 +56,18 @@ const updateCartItem = (book, item = {}) => {
         total: total + book.price
     }
 }
+
+const decreaseCartItem = (book, item = {}) => {
+
+    const { id = book.id, title = book.title, count = 0, total = 0 } = item;
+    return {
+        id,
+        title,
+        count: count - 1,
+        total: total - book.price
+    }
+}
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -81,20 +108,29 @@ const reducer = (state = initialState, action) => {
                 cartItems: updateCartItems(state.cartItems, newItem, itemIndex)
             }
 
-        case 'BOOK_DELETE':
-
-            const bookId2 = action.payload;
-            //const book = state.books.find((book) => book.id === bookId);
-            const itemIndex2 = state.cartItems.findIndex(({ id }) => id === bookId2);
-            //console.log(`bookIDinSErvice - ${bookId2}, indexinCartArray - ${itemIndex2}`);
-            const item2 = state.cartItems[itemIndex2];
-            console.log(item2);
-            console.log(itemIndex2);
-            console.log(state.cartItems)
-            return state;
+        case 'ONE_BOOK_DELETE':
+            const bookId3 = action.payload;
+            const book3 = state.books.find((book) => book.id === bookId3);
+            let itemIndex3 = state.cartItems.findIndex(({ id }) => id === bookId3);
+            const item3 = state.cartItems[itemIndex3];
+            const newItem3 = decreaseCartItem(book3, item3);
+            console.log( newItem3.count < 1);
+            //return state;
             return {
                 ...state,
-                cartItems: deleteCartItems(state.cartItems, itemIndex2)
+                cartItems: decreaseOneBookInCartItem(state.cartItems, newItem3, itemIndex3)
+            }
+
+        case 'BOOK_DELETE':
+            const bookId2 = action.payload;
+            const itemIndex2 = state.cartItems.findIndex(({ id }) => id === bookId2);
+            const newCart = [...state.cartItems]
+            newCart.splice(itemIndex2, 1);
+            return {
+                ...state,
+                //cartItems: [...state.cartItems].splice(itemIndex2, 1) DO NOT WORK!!
+                 //cartItems: deleteCartItems(state.cartItems, itemIndex2)
+                cartItems: newCart
             }
 
         default:

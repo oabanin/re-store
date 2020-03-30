@@ -19,7 +19,7 @@ const booksError = (error) => {
 }
 
 
-const fetchBooks = (dispatch, bookstoreService) => () => {
+export const fetchBooks = (dispatch, bookstoreService) => () => {
     dispatch(booksRequested());
     bookstoreService.getBooks()                   // 1. receive data
         .then(data => dispatch(booksLoaded(data)))  // 2. dispacth action to store
@@ -33,11 +33,17 @@ export const bookAddedToCart = (bookId) => {
     }
 }
 
-export const deleteBook = (bookId) => {
+export const deleteAllBooks = (bookId) => {
     return {
         type: 'BOOK_DELETE',
         payload: bookId
     }
 }
 
-export { fetchBooks };
+export const deleteOneBook = (bookId) => {
+    return {
+        type: 'ONE_BOOK_DELETE',
+        payload: bookId
+    }
+}
+

@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {deleteBook} from '../../actions'
+import { bookAddedToCart, deleteAllBooks, deleteOneBook } from '../../actions'
 import './shopping-cart-table.css';
 
 const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
- 
   const renderRow = (item, idx) => {
-
     const { id, title, count, total } = item;
     return (
       <tr key={id}>
@@ -34,7 +32,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
       </tr>
     );
   };
-  
+
   return (
     <div className="shopping-cart-table">
       <h2>Your Order</h2>
@@ -50,8 +48,8 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) =
         </thead>
 
         <tbody>
-    
-        { items.map(renderRow) }
+
+          {items.map(renderRow)}
         </tbody>
       </table>
 
@@ -71,15 +69,9 @@ const mapStateToProps = ({ cartItems, orderTotal }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onIncrease: (id) => {
-      console.log(`Increase ${id}`);
-    },
-
-    onDecrease: (id) => {
-      console.log(`Decrease ${id}`);
-    },
-
-    onDelete: (id) => dispatch(deleteBook(id))
+    onIncrease: (id) => dispatch(bookAddedToCart(id)),
+    onDecrease: (id) => dispatch(deleteOneBook(id)),
+    onDelete: (id) => dispatch(deleteAllBooks(id))
   }
 };
 
