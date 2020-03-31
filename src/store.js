@@ -17,13 +17,19 @@ const stringMiddleware = () => (next) => (action) => {
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware, stringMiddleware, logMiddleware));
 
-const myAction = (dispatch) => {
+/* const myAction = (dispatch) => {
     setTimeout(() => {
         dispatch({ type: "DELAYED_ACTION" })
     }, 2000);
+}; */
+
+const delayedActionCreator = (timeout) => (dispatch) => {
+    setTimeout(() => {
+        dispatch({ type: "DELAYED_ACTION" })
+    }, timeout);
 };
 
-store.dispatch(myAction)
+store.dispatch(delayedActionCreator(3000 ))
 
 store.dispatch('HELLO_WORLD');
 
