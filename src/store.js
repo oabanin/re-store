@@ -1,18 +1,21 @@
-import { createStore} from 'redux';
+import { createStore } from 'redux';
 
 import reducer from './reducers';
 
-const store = createStore(reducer);
-
-const originalDispatch = store.dispatch;
-
-store.dispatch = (action) => {
-    if(typeof action === "string"){
-        return originalDispatch({type: action})
+const enhancer = (createStore) => (...args) => {
+    const store = createStore(...args);
+    const originalDispatch = store.dispatch;
+    store.dispatch = (action) => {
+        if (typeof action === "string") {
+            return originalDispatch({ type: action })
+        }
+        return originalDispatch(action);
     }
-    return originalDispatch(action);
+    return store;
 }
 
-store.dispatch({type: 'HELLO_WORLD'});
+const store = createStore(reducer, enhancer);
+
+store.dispatch('HELLO_WORLD');
 
 export default store;
