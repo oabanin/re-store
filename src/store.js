@@ -33,4 +33,67 @@ store.dispatch(delayedActionCreator(3000 ))
 
 store.dispatch('HELLO_WORLD');
 
+
+
+store.dispatch({ type: 'INCREMENT' })
+
+
+
+
+
+//BAD PRACTIcE FROM STACKOVERFLOW because you cant't use SERVER RENDERING with this code
+
+
+
+function showNotification(id, text) {
+    return { type: 'SHOW_NOTIFICATION', id, text }
+  }
+  function hideNotification(id) {
+    return { type: 'HIDE_NOTIFICATION', id }
+  }
+
+
+
+/* 
+WITHOUT THUNK
+
+function showNotificationWithTimeout(text) {
+    const id = nextNotificationId++
+    store.dispatch(showNotification(id, text))
+  
+    setTimeout(() => {
+      store.dispatch(hideNotification(id))
+    }, 5000)
+  } 
+  
+  =============
+  WITH THUNK
+
+
+  */
+ let nextNotificationId = 0;
+ function showNotificationWithTimeout(text) {
+    return function (dispatch) {
+      const id = nextNotificationId++
+      dispatch(showNotification(id, text))
+  
+      setTimeout(() => {
+        dispatch(hideNotification(id))
+      }, 5000)
+    }
+  }
+  
+ showNotificationWithTimeout('You just logged in.')
+ showNotificationWithTimeout('You just logged out.')    
+
+
+
+
+/* store.dispatch({ type: 'SHOW_NOTIFICATION', text: 'You logged in.' })
+setTimeout(() => {
+  store.dispatch({ type: 'HIDE_NOTIFICATION' })
+}, 5000) */
+
+
+
 export default store;
