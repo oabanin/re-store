@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BookListItem from '../book-list-item';
 import { connect } from 'react-redux';
 
+import {bindActionCreators} from 'redux';
 import { withBookstoreService } from '../hoc';
 import { fetchBooks, bookAddedToCart } from '../../actions';
 import { compose } from '../../utils';
@@ -53,13 +54,13 @@ const mapStateToProps = ({ bookList: { books, loading, error } }) => {
 };
 
 const mapDispatchToProps = (dispatch, { bookstoreService }) => {
-  return {
+  return bindActionCreators({
     
     //fetchBooks: fetchBooks(dispatch, bookstoreService),           -- OLD
  // fetchBooks: () => dispatch(fetchBooks(bookstoreService)()),  -- NEW with THUNK
-    fetchBooks: () => dispatch(fetchBooks(bookstoreService)()),   
-    onAddedToCart: (id) => dispatch(bookAddedToCart(id))
-  }
+    fetchBooks: fetchBooks(bookstoreService),   
+    onAddedToCart: bookAddedToCart
+  }, dispatch);
 };
 
 
