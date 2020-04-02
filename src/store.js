@@ -31,11 +31,11 @@ const delayedActionCreator = (timeout) => (dispatch) => {
 
 store.dispatch(delayedActionCreator(3000 ))
 
-store.dispatch('HELLO_WORLD');
+//store.dispatch('HELLO_WORLD');
 
 
 
-store.dispatch({ type: 'INCREMENT' })
+//store.dispatch({ type: 'INCREMENT' })
 
 
 
@@ -46,10 +46,11 @@ store.dispatch({ type: 'INCREMENT' })
 
 
 function showNotification(id, text) {
-    return { type: 'SHOW_NOTIFICATION', id, text }
+    console.log(id, text);
+    return { type: 'SHOW_NOTIFICATION_WITH_THUNK', id, text }
   }
   function hideNotification(id) {
-    return { type: 'HIDE_NOTIFICATION', id }
+    return { type: 'HIDE_NOTIFICATION_WITH_THUNK', id }
   }
 
 
@@ -71,7 +72,7 @@ function showNotificationWithTimeout(text) {
 
 
   */
- let nextNotificationId = 0;
+ let nextNotificationId = 0; 
  function showNotificationWithTimeout(text) {
     return function (dispatch) {
       const id = nextNotificationId++
@@ -83,8 +84,8 @@ function showNotificationWithTimeout(text) {
     }
   }
   
- showNotificationWithTimeout('You just logged in.')
- showNotificationWithTimeout('You just logged out.')    
+showNotificationWithTimeout('You just logged in.')(store.dispatch);
+ showNotificationWithTimeout('You just logged out.')    (store.dispatch);
 
 
 

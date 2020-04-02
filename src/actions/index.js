@@ -19,19 +19,19 @@ const booksError = (error) => {
 }
 
 
-export const fetchBooks = (dispatch, bookstoreService) => () => {
+export const fetchBooksOld = (dispatch, bookstoreService) => () => {
+    dispatch(booksRequested());                     //0.clear state
+    bookstoreService.getBooks()                   // 1. receive data
+        .then(data => dispatch(booksLoaded(data)))  // 2. setState on loading
+        .catch(err => dispatch(booksError(err)));    //3. onError
+}
+
+export const fetchBooks = (bookstoreService)=> () => (dispatch) => {
     dispatch(booksRequested());
     bookstoreService.getBooks()                   // 1. receive data
         .then(data => dispatch(booksLoaded(data)))  // 2. dispacth action to store
         .catch(err => dispatch(booksError(err)));    //3. onError
 }
-
-// export const fetchBooks = (bookstoreService)=> () => (dispatch) => {
-//     dispatch(booksRequested());
-//     bookstoreService.getBooks()                   // 1. receive data
-//         .then(data => dispatch(booksLoaded(data)))  // 2. dispacth action to store
-//         .catch(err => dispatch(booksError(err)));    //3. onError
-// }
 
 export const bookAddedToCart = (bookId) => {
     return {
